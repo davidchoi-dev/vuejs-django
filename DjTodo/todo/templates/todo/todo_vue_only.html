@@ -1,111 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue-Django ToDo App</title>
+{% extends 'base.html' %}
+{% block title %}todo_vue_only.html{% endblock %}
+{% block extra-style %}
+<style>
+body {
+        text-align: center;
+        background-color: #ddd;
+    }
+    .inputBox {
+        margin: auto;
+        width: 70%;
+        background: white;
+        height: 50px;
+        border-radius: 50px;
+        line-height: 50px;
+    }
+    .inputBox .name {
+        border-style: none;
+        border-bottom: 1px solid #ddd;
+        width: 90px;
+        padding-left: 20px;
+        line-height: 20px;
+    }
+    .inputBox .item {
+        border-style: none;
+        border-bottom: 1px solid #ddd;
+        width: 400px;
+        margin-left: 50px;
+        padding-left: 20px;
+        line-height: 20px;
+    }
+    .todoList {
+        list-style: none;
+        padding: 10px 0;
+        text-align: left;
+    }
+    .todoList li {
+        display: flex;
+        height: 50px;
+        line-height: 50px;
+        margin: 0.5rem 0;
+        padding: 0 0.9rem;
+        background: white;
+        border-radius: 5px;
+    }
+    .removeBtn {
+        margin-left: auto;
+        font-size: 20px;
+    }
+</style>
+{% endblock %}
 
-    <style>
-        body {
-            text-align: center;
-            background-color: #ddd;
-        }
-        .inputBox {
-            margin: auto;
-            width: 70%;
-            background: white;
-            height: 50px;
-            border-radius: 50px;
-            line-height: 50px;
-        }
-        .inputBox .name {
-            border-style: none;
-            border-bottom: 1px solid #ddd;
-            width: 70px;
-            padding-left: 20px;
-        }
-        .inputBox .item {
-            border-style: none;
-            border-bottom: 1px solid #ddd;
-            width: 400px;
-            margin-left: 50px;
-            padding-left: 20px;
-        }
-        .todoList {
-            list-style: none;
-            padding: 10px 0;
-            text-align: left;
-        }
-        .todoList li {
-            display: flex;
-            height: 50px;
-            line-height: 50px;
-            margin: 0.5rem 0;
-            padding: 0 0.9rem;
-            background: white;
-            border-radius: 5px;
-        }
-        .removeBtn {
-            margin-left: auto;
-            font-size: 20px;
-        }
-    </style>
-</head>
+{% block content %}
+<div id="app">
 
-<body>
-    <div id="app">
+    <h1>My Todo App !</h1>
+    <strong>서로 할 일이나 의견을 공유해 봅시다.</strong>
+    <br>
 
-        <h1>My Todo App !</h1>
-        <strong>서로 할 일이나 의견을 공유해 봅시다.</strong>
-        <br>
-
-        <div class="inputBox">
-            <input class="name" type="text" placeholder="name ..." v-model="name">
-            <input class="item" type="text" placeholder="type anything welcomed ..." 
-                v-model="newTodoItem" v-on:keyup.enter="add_todo()">
-            <button v-on:click="add_todo()">ADD</button>
-        </div>
-    
-        <ul class="todoList">
-            <li v-for="(todo, index) in todoItems">
-                <span>{ todo.name }:: { todo.item }</span>
-                <span class="removeBtn" v-on:click="remove_todo(index)">&#x00D7</span>
-            </li>
-        </ul>
-
+    <div class="inputBox">
+        <input class="name" type="text" placeholder="name ..." v-model="name">
+        <input class="item" type="text" placeholder="type anything welcomed ..." 
+            v-model="newTodoItem" v-on:keyup.enter="add_todo()">
+        <button v-on:click="add_todo()" class="btn btn-primary btn-sm">ADD</button>
     </div>
 
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-    <script>
-        var vm = new Vue({
-            delimiters: ['{', '}'],
-            el: '#app',
-            data: {
-                name: '',
-                newTodoItem: '',
-                todoItems: [
-                ],
-            },
-            methods: {
-                add_todo: function() {
-                    console.log("add_todo() ...");
-                    if (this.name == '') this.name = '홍길동';
-                    if (this.newTodoItem == '') return;
-                    this.todoItems.push({
-                        name: this.name,
-                        item: this.newTodoItem
-                    });
-                    this.name = '';
-                    this.newTodoItem = '';
-                },
-                remove_todo: function(index) {
-                    console.log("remove_todo() ...");
-                    this.todoItems.splice(index, 1);
-                }
-            },
-        })
-    </script>
+    <ul class="todoList">
+        <li v-for="(todo, index) in todoItems">
+            <span>{ todo.name }:: { todo.item }</span>
+            <span class="removeBtn" v-on:click="remove_todo(index)">&#x00D7</span>
+        </li>
+    </ul>
 
+</div>
+{% endblock %}
 
-</body>
-</html>
+{% block extra-script %}
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        delimiters: ['{', '}'],
+        el: '#app',
+        data: {
+            name: '',
+            newTodoItem: '',
+            todoItems: [
+            ],
+        },
+        methods: {
+            add_todo: function() {
+                console.log("add_todo() ...");
+                if (this.name == '') this.name = '홍길동';
+                if (this.newTodoItem == '') return;
+                this.todoItems.push({
+                    name: this.name,
+                    item: this.newTodoItem
+                });
+                this.name = '';
+                this.newTodoItem = '';
+            },
+            remove_todo: function(index) {
+                console.log("remove_todo() ...");
+                this.todoItems.splice(index, 1);
+            }
+        },
+    })
+</script>
+{% endblock %}
