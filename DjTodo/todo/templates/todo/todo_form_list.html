@@ -66,7 +66,7 @@ body {
         {% for todo in object_list %}
         <li>
             <span>{{ todo.name }}:: {{ todo.todo }}</span>
-            <span class="removeBtn"><a href="{% url 'todo:delete' todo.id %}">&#x00D7</a></span>
+            <span class="removeBtn"><a href="{% url 'todo:delete2' todo.id %}">&#x00D7</a></span>
         </li>
         {% endfor %}
     </ul>

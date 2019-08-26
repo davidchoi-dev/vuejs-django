@@ -40,3 +40,12 @@ class TodoMOMCV(MultipleObjectMixin, CreateView):
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         return super().post(request, *args, **kwargs)
+
+
+class TodoDelV2(DeleteView):
+    model = Todo
+    success_url = reverse_lazy('todo:mixin')
+
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
