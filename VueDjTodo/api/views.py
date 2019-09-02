@@ -1,15 +1,16 @@
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
 from django.forms.models import model_to_dict
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.list import BaseListView
 from django.views.generic.edit import BaseDeleteView, BaseCreateView
-from django.views.decorators.csrf import csrf_exempt
 
 from todo.models import Todo
 
 import json
 
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class ApiTodoLV(BaseListView):
     model = Todo
 
@@ -18,7 +19,6 @@ class ApiTodoLV(BaseListView):
         return JsonResponse(data=todoList, safe=False)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ApiTodoDelV(BaseDeleteView):
     model = Todo
 
@@ -28,7 +28,6 @@ class ApiTodoDelV(BaseDeleteView):
         return JsonResponse(data={}, status=204)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class ApiTodoCV(BaseCreateView):
     model = Todo
     fields = '__all__'
