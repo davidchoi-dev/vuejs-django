@@ -50,11 +50,14 @@ body {
     .removeBtn:hover {
         color: red;
     }
+    [v-cloak] {
+        display: none;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div id="app">
+<div id="app" v-cloak>
 
     <h1>My Todo App !</h1>
     <strong>서로 할 일이나 의견을 공유해 봅시다.</strong>
