@@ -1,3 +1,3 @@
-DjTodo/venv
-DjTodo/db.sqlite3
+venv
+*/db.sqlite3
 *.pyc
